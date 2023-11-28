@@ -41,11 +41,11 @@ def leer_datos():
 
 # Entrenar la red neuronal con el algoritmo Levenberg-Marquardt
 def entrenar_red():
-    #AQUI DIBUJAR EN EL CANVAS PARA QUE SE REFLEJEN, OPCIONAL QUE FUNCIONE POR CLICKS, RECUERDA PONER LOS MAX ITER COMO VARIABLE
-    #LA CANTIDAD DE NEURONAS TAMBIEN PUEDE PONERSE COMO VARIABLES Y EL ALPHA ES EL LEARNING RATE
     global X,y,ax,f
     clf = MLPClassifier(hidden_layer_sizes=(100,), max_iter=1000, solver='lbfgs',alpha=0.3)
     clf.fit(X, y)
+    visualizar_resultados(X, y, clf)
+    
     return clf
 
 def visualizar_inicio(x,y):
@@ -57,8 +57,6 @@ def visualizar_inicio(x,y):
 def visualizar_resultados(X, y, clf):
     global ax,f
     plt.title('Entrenamiento Levemberg Marquardt')
-    
-
     # Crear un plano cartesiano para visualizar la clasificación
     h = .02
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
@@ -72,15 +70,14 @@ def visualizar_resultados(X, y, clf):
     cmap = ListedColormap(
             [colores[i] for i in np.unique(y_int)]
         )
-    plt.contourf(xx, yy, Z, cmap=cmap, alpha=0.8)
-    ax.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap)
+    #plt.contourf(xx, yy, Z, cmap=cmap, alpha=0.8)
+    #ax.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap)
+    f.canvas.draw()
+    ax.contourf(xx, yy, Z, cmap=cmap, alpha=0.3)
+    ax.scatter(X[:, 0], X[:, 1], c=y, edgecolors='k', cmap=cmap)
     f.canvas.draw()
 
 # Nombre del archivo de datos
-
-
-
-
 
 def inicio(root):
         global X,y,ax,f
